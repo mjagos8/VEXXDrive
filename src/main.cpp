@@ -23,7 +23,7 @@ using namespace vex;
 
 using code = vision::code;
 
-controller Controller;
+controller Controller1;
 competition Competition;
 brain brain;
 
@@ -36,42 +36,40 @@ void userController(void)
 {
   while (1) {
 
- int x = Controller.Axis4.value();
- int y = Controller.Axis3.value();
+ int x = Controller1.Axis4.value();
+ int y = Controller1.Axis3.value();
 
- int xy = (y + x);
+ //int xy = (y + x);
  //int yx = (y - x);
-
-
-    
-  //North East (Probably doesnt work)
+  backL.spin(vex::directionType::fwd, Controller1.Axis3.value() + Controller1.Axis1.value() - Controller1.Axis4.value(), vex::velocityUnits::pct);
+  frontL.spin(vex::directionType::fwd, Controller1.Axis3.value() + Controller1.Axis1.value() + Controller1.Axis4.value(), vex::velocityUnits::pct);
+  backR.spin(vex::directionType::rev, Controller1.Axis3.value() - Controller1.Axis1.value() + Controller1.Axis4.value(), vex::velocityUnits::pct);
+  frontR.spin(vex::directionType::rev, Controller1.Axis3.value() - Controller1.Axis1.value() - Controller1.Axis4.value(), vex::velocityUnits::pct);
+  
   if (x > 25  && y > 25 ){
-  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-  backR.spin(directionType::rev, (xy), percentUnits::pct);
   backL.stop(brakeType::brake);
   frontR.stop(brakeType::brake);
   } //South East
   else if (x > 25  && y < -25 ){
-  backL.spin(directionType::fwd, (xy), percentUnits::pct);
-  frontR.spin(directionType::rev, (xy), percentUnits::pct);
   backR.stop(brakeType::brake);
   frontL.stop(brakeType::brake);
   }
   //South West
   else if (y < -25 && x < -25){
-    frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-    backR.spin(directionType::rev, (xy), percentUnits::pct);
     backL.stop(brakeType::brake);
     frontR.stop(brakeType::brake);
   }
   //North West
  else if (x < -25 && y > 25){
-    frontR.spin(directionType::rev, (xy), percentUnits::pct);
-    backL.spin(directionType::fwd, (xy), percentUnits::pct);
     backR.stop(brakeType::brake);
     frontL.stop(brakeType::brake);
-  }//North
-  else if ( y > 0 && x < 25 && x > -25){
+
+ }
+
+
+
+    //North
+  /*if (Controller.Axis3.value() > 0 && Controller.Axis4.value() < 25 && Controller.Axis4.value() > -25 ){
   frontL.spin(directionType::fwd, (xy), percentUnits::pct);
   frontR.spin(directionType::rev, (xy), percentUnits::pct);
   backL.spin(directionType::fwd, (xy), percentUnits::pct);
@@ -94,15 +92,19 @@ void userController(void)
   backL.spin(directionType::rev, (xy), percentUnits::pct);
   backR.spin(directionType::rev, (xy), percentUnits::pct);
   frontR.spin(directionType::fwd, (xy), percentUnits::pct);
-  }
-else {
+  }//North East (Probably doesnt work)
+  else if (Controller.Axis3.value() > 0 && Controller.Axis4.value() < 75 && Controller.Axis4.value() > 25 ){
+  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
+  backR.spin(directionType::rev, (xy), percentUnits::pct);
+  }*/
+/*else {
 frontL.stop(brakeType::brake);
 frontR.stop(brakeType::brake);
 backL.stop(brakeType::brake);
 backR.stop(brakeType::brake);
+}*/
+  }
 }
-  }
-  }
 
 
 
