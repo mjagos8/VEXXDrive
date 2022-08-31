@@ -65,13 +65,6 @@ void userController(void)
   backR.stop(brakeType::brake);
   frontL.stop(brakeType::brake);
   }
-  //Deadzone fixer
-  else if ((x < 5 && x > -5) || (y < 5 && y > -5)){
-  backR.stop(brakeType::brake);
-  backL.stop(brakeType::brake);
-  frontL.stop(brakeType::brake);
-  frontR.stop(brakeType::brake);
-  }
 
   }
 }
