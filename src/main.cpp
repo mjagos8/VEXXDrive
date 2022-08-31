@@ -27,10 +27,10 @@ controller Controller;
 competition Competition;
 brain brain;
 
-motor frontL = motor(PORT1, ratio18_1,false);
-motor backL = motor(PORT13, ratio18_1,false);
-motor frontR = motor(PORT2, ratio18_1,false);
-motor backR = motor(PORT12, ratio18_1,false);
+motor frontL = motor(PORT14, ratio18_1,false);
+motor backL = motor(PORT2, ratio18_1,false);
+motor frontR = motor(PORT15, ratio18_1,false);
+motor backR = motor(PORT1, ratio18_1,false);
 
 void userController(void) 
 {
@@ -43,8 +43,35 @@ void userController(void)
  //int yx = (y - x);
 
 
-    //North
-  if (Controller.Axis3.value() > 0 && Controller.Axis4.value() < 25 && Controller.Axis4.value() > -25 ){
+    
+  //North East (Probably doesnt work)
+  if (x > 25  && y > 25 ){
+  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
+  backR.spin(directionType::rev, (xy), percentUnits::pct);
+  backL.stop(brakeType::brake);
+  frontR.stop(brakeType::brake);
+  } //South East
+  else if (x > 25  && y < -25 ){
+  backL.spin(directionType::fwd, (xy), percentUnits::pct);
+  frontR.spin(directionType::rev, (xy), percentUnits::pct);
+  backR.stop(brakeType::brake);
+  frontL.stop(brakeType::brake);
+  }
+  //South West
+  else if (y < -25 && x < -25){
+    frontL.spin(directionType::fwd, (xy), percentUnits::pct);
+    backR.spin(directionType::rev, (xy), percentUnits::pct);
+    backL.stop(brakeType::brake);
+    frontR.stop(brakeType::brake);
+  }
+  //North West
+ else if (x < -25 && y > 25){
+    frontR.spin(directionType::rev, (xy), percentUnits::pct);
+    backL.spin(directionType::fwd, (xy), percentUnits::pct);
+    backR.stop(brakeType::brake);
+    frontL.stop(brakeType::brake);
+  }//North
+  else if ( y > 0 && x < 25 && x > -25){
   frontL.spin(directionType::fwd, (xy), percentUnits::pct);
   frontR.spin(directionType::rev, (xy), percentUnits::pct);
   backL.spin(directionType::fwd, (xy), percentUnits::pct);
@@ -67,10 +94,6 @@ void userController(void)
   backL.spin(directionType::rev, (xy), percentUnits::pct);
   backR.spin(directionType::rev, (xy), percentUnits::pct);
   frontR.spin(directionType::fwd, (xy), percentUnits::pct);
-  }//North East (Probably doesnt work)
-  else if (Controller.Axis3.value() > 0 && Controller.Axis4.value() < 75 && Controller.Axis4.value() > 25 ){
-  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-  backR.spin(directionType::rev, (xy), percentUnits::pct);
   }
 else {
 frontL.stop(brakeType::brake);
