@@ -34,79 +34,47 @@ motor backR = motor(PORT1, ratio18_1,false);
 
 void userController(void) 
 {
-  while (1) {
+  while (1) 
+  {
 
  int x = Controller1.Axis4.value();
  int y = Controller1.Axis3.value();
-
- //int xy = (y + x);
- //int yx = (y - x);
+ 
   backL.spin(vex::directionType::fwd, Controller1.Axis3.value() + Controller1.Axis1.value() - Controller1.Axis4.value(), vex::velocityUnits::pct);
   frontL.spin(vex::directionType::fwd, Controller1.Axis3.value() + Controller1.Axis1.value() + Controller1.Axis4.value(), vex::velocityUnits::pct);
   backR.spin(vex::directionType::rev, Controller1.Axis3.value() - Controller1.Axis1.value() + Controller1.Axis4.value(), vex::velocityUnits::pct);
   frontR.spin(vex::directionType::rev, Controller1.Axis3.value() - Controller1.Axis1.value() - Controller1.Axis4.value(), vex::velocityUnits::pct);
-  
+
+  //North East
   if (x > 25  && y > 25 ){
   backL.stop(brakeType::brake);
   frontR.stop(brakeType::brake);
-  } //South East
+  } 
+  //South East
   else if (x > 25  && y < -25 ){
   backR.stop(brakeType::brake);
   frontL.stop(brakeType::brake);
   }
   //South West
   else if (y < -25 && x < -25){
-    backL.stop(brakeType::brake);
-    frontR.stop(brakeType::brake);
+  backL.stop(brakeType::brake);
+  frontR.stop(brakeType::brake);
   }
   //North West
- else if (x < -25 && y > 25){
-    backR.stop(brakeType::brake);
-    frontL.stop(brakeType::brake);
+  else if (x < -25 && y > 25){
+  backR.stop(brakeType::brake);
+  frontL.stop(brakeType::brake);
+  }
+  //Deadzone fixer
+  else if ((x < 5 && x > -5) || (y < 5 && y > -5)){
+  backR.stop(brakeType::brake);
+  backL.stop(brakeType::brake);
+  frontL.stop(brakeType::brake);
+  frontR.stop(brakeType::brake);
+  }
 
- }
-
-
-
-    //North
-  /*if (Controller.Axis3.value() > 0 && Controller.Axis4.value() < 25 && Controller.Axis4.value() > -25 ){
-  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-  frontR.spin(directionType::rev, (xy), percentUnits::pct);
-  backL.spin(directionType::fwd, (xy), percentUnits::pct);
-  backR.spin(directionType::rev, (xy), percentUnits::pct);
-  }//East
-  else if (Controller.Axis4.value() > 0 && Controller.Axis3.value() < 25  && Controller.Axis3.value() > -25 ){
-  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-  backL.spin(directionType::rev, (xy), percentUnits::pct);
-  backR.spin(directionType::rev, (xy), percentUnits::pct);
-  frontR.spin(directionType::fwd, (xy), percentUnits::pct);
-  }//South
-  else if (Controller.Axis3.value() < 0 && Controller.Axis4.value() < 25 && Controller.Axis4.value() > -25 ){
-  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-  frontR.spin(directionType::rev, (xy), percentUnits::pct);
-  backL.spin(directionType::fwd, (xy), percentUnits::pct);
-  backR.spin(directionType::rev, (xy), percentUnits::pct);
-  }//West
-  else if (Controller.Axis4.value() < 0 && Controller.Axis3.value() < 25  && Controller.Axis3.value() > -25 ){
-  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-  backL.spin(directionType::rev, (xy), percentUnits::pct);
-  backR.spin(directionType::rev, (xy), percentUnits::pct);
-  frontR.spin(directionType::fwd, (xy), percentUnits::pct);
-  }//North East (Probably doesnt work)
-  else if (Controller.Axis3.value() > 0 && Controller.Axis4.value() < 75 && Controller.Axis4.value() > 25 ){
-  frontL.spin(directionType::fwd, (xy), percentUnits::pct);
-  backR.spin(directionType::rev, (xy), percentUnits::pct);
-  }*/
-/*else {
-frontL.stop(brakeType::brake);
-frontR.stop(brakeType::brake);
-backL.stop(brakeType::brake);
-backR.stop(brakeType::brake);
-}*/
   }
 }
-
-
 
 int main() {
   Competition.drivercontrol(userController);
